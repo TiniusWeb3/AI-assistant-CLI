@@ -14,7 +14,7 @@ const Settings = lazy(() => import("./pages/settings"));
 
 function Router() {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <main className="flex-1 overflow-y-auto p-6">
         <Suspense fallback={<div>Loading...</div>}>
