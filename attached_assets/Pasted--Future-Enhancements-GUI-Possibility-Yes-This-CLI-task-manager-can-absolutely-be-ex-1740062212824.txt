@@ -1,0 +1,48 @@
+### **Future Enhancements & GUI Possibility**  
+
+Yes! This CLI task manager can **absolutely** be extended into a **minimal GUI** while keeping its CLI functionality intact. 🚀  
+
+---
+
+## **✅ Future Enhancements (Short & Long Term)**
+### **🔹 Short-Term Enhancements (CLI Improvements)**
+- **`task reauth`** → Manual token refresh if needed.  
+- **`task export`** → Save tasks/events as JSON, CSV, or Markdown.  
+- **Task Dependencies** → Allow tasks to be linked (e.g., "Finish Report" depends on "Collect Data").  
+- **Custom Reminders** → Set notification alerts for tasks (`task notify`).  
+- **Advanced Filtering** → Query tasks/events using tags, priority, or natural language (`task list --priority high`).  
+
+---
+
+### **🔹 Long-Term Enhancements (Beyond CLI)**
+#### **1️⃣ Minimal GUI (Desktop App)**
+A **lightweight graphical interface** could be built on top of the existing CLI, using:
+- **`Textual`** (for a terminal-based GUI) → Provides a **TUI (Terminal UI)** with panels, task lists, and interactive menus.  
+- **`PyQt` or `Tkinter`** (for a simple desktop GUI) → Adds a **basic window-based interface** for task management.  
+- **`Electron.js` or `Tauri`** (for a web-based desktop app) → If a **cross-platform GUI** is needed.  
+
+✅ **Implementation Plan for GUI:**
+1. **Wrap CLI functions in an API layer** (so both CLI & GUI can interact with the task manager).  
+2. **Add a task list UI** with buttons for adding, editing, and completing tasks.  
+3. **Keep offline mode working** by **syncing in the background** and showing cached data when offline.  
+
+---
+
+#### **2️⃣ Mobile App**
+- Could be built using **Flutter** or **React Native**.
+- Syncs with the same task database as the CLI/GUI.
+- Provides quick access to tasks and calendar events.  
+
+---
+
+#### **3️⃣ Web Dashboard**
+- **FastAPI backend** to expose an API.
+- **React/Next.js frontend** to manage tasks in a browser.
+- Syncs with **Google Calendar & Microsoft To Do**.
+
+---
+
+### **Final Thought**
+A **minimal GUI** (built with `Textual` or `PyQt`) would be the **most practical** next step without overcomplicating the project.  
+
+Would you like a **basic prototype of a GUI** alongside the CLI? 🚀
