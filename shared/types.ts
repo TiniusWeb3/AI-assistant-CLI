@@ -19,3 +19,19 @@ export interface GoogleEvent {
   startTime: Date;
   endTime: Date;
 }
+
+export interface NotionTask {
+  id: string;
+  title: string;
+  description?: string;
+  completed: boolean;
+  dueDate?: Date;
+  url: string;  // URL to the Notion page
+  lastEdited: Date;
+}
+
+export interface NotionDatabase {
+  id: string;
+  title: string;
+  url: string;
+}

@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer } from "http";
 import { storage } from "./storage";
 import { insertTaskSchema, insertEventSchema } from "@shared/schema";
+import { notionService } from "./services/notion";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express) {
@@ -49,6 +50,49 @@ export async function registerRoutes(app: Express) {
 
     const event = await storage.createEvent(result.data);
     res.json(event);
+  });
+
+  // Notion Routes
+  app.get("/api/notion/databases", async (req, res) => {
+    try {
+      const databases = await notionService.getDatabases();
+      res.json(databases);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch Notion databases" });
+    }
+  });
+
+  app.get("/api/notion/:databaseId/tasks", async (req, res) => {
+    try {
+      const tasks = await notionService.getTasks(req.params.databaseId);
+      res.json(tasks);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch Notion tasks" });
+    }
+  });
+
+  app.post("/api/sync/notion/:databaseId", async (req, res) => {
+    try {
+      const tasks = await storage.getTasks();
+      let syncCount = 0;
+
+      for (const task of tasks) {
+        if (!task.synced) {
+          await notionService.createTask(req.params.databaseId, {
+            title: task.title,
+            description: task.description ?? undefined,
+            completed: task.completed,
+            dueDate: task.dueDate ?? undefined
+          });
+          await storage.updateTask(task.id, { synced: true });
+          syncCount++;
+        }
+      }
+
+      res.json({ count: syncCount });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to sync with Notion" });
+    }
   });
 
   const server = createServer(app);

@@ -15,6 +15,10 @@ export default function Settings() {
     queryKey: ["/api/auth/google/status"],
   });
 
+  const { data: notionAuth } = useQuery<boolean>({
+    queryKey: ["/api/auth/notion/status"],
+  });
+
   const handleAuth = async (provider: string) => {
     try {
       const res = await apiRequest("GET", `/api/auth/${provider}/url`);
@@ -72,6 +76,24 @@ export default function Settings() {
                 onClick={() => handleAuth("google")}
               >
                 {googleAuth ? "Disconnect" : "Connect"}
+              </Button>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="h-6 w-6 text-black">N</div>
+                <div>
+                  <h3 className="font-medium">Notion</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {notionAuth ? "Connected" : "Not connected"}
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant={notionAuth ? "outline" : "default"}
+                onClick={() => handleAuth("notion")}
+              >
+                {notionAuth ? "Disconnect" : "Connect"}
               </Button>
             </div>
           </CardContent>
